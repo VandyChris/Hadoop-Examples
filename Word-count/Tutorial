@@ -1,0 +1,8 @@
+# Movtivation: count word occurrences in three text files
+# Platform: Cloudera quickstart virtual machine http://www.cloudera.com/downloads/quickstart_vms/5-7.html
+
+# Step 1: Download three target text files to local folder /home/cloudera
+
+# Step 2: Download the mapper function wordcount_mapper.py and the reducer function wordcount_reducer.py to local folder /home/cloudera
+
+# 
