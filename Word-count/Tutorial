@@ -4,5 +4,26 @@
 # Step 1: Download three target text files to local folder /home/cloudera
 
 # Step 2: Download the mapper function wordcount_mapper.py and the reducer function wordcount_reducer.py to local folder /home/cloudera
+# You can verify the mapper fucntion by
+[cloudera@quickstart ~]$ cat /home/cloudera/test_file1.txt | /home/cloudera/wordcount_mapper.py
+# You can verify the reducer function by
+[cloudera@quickstart ~]$ cat /home/cloudera/test_file1.txt | /home/cloudera/wordcount_mapper.py | sort | /home/cloudera/wordcount_reducer.py
 
-# 
+# Step 3: Create a folder in HDFS for this exampel, and creat another subfoler input to save the target files
+[cloudera@quickstart ~]$ hadoop fs -mkdir /user/cloudera/wordcount
+[cloudera@quickstart ~]$ hadoop fs -mkdir /user/cloudera/wordcount/input
+
+# Step 4: Upload the target text files to the created folder
+[cloudera@quickstart ~]$ hadoop fs -put /home/cloudera/test_file*  /user/cloudera/wordcount/input
+# Note: you don't have to upload the mapper or the reducer functions.
+
+
+# Step 5: Run
+[cloudera@quickstart ~]$ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+   -input /user/cloudera/wordcount/input \
+   -output /user/cloudera/wordcount/output\
+   -mapper /home/cloudera/wordcount_mapper.py\
+   -reducer /home/cloudera/wordcount_reducer.py
+   
+# Step 6: Check the result
+[cloudera@quickstart ~]$ hadoop fs -cat /user/cloudera/wordcount/output/part*
